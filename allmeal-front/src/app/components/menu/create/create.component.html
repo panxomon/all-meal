@@ -1,0 +1,73 @@
+<div class="container mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">Crear Nuevo Menú</h2>
+
+  <form [formGroup]="menuForm" (ngSubmit)="onSubmit()" class="bg-white shadow-md rounded-lg p-6">
+    
+    <div class="mb-4">      
+      <label for="date" class="block text-gray-700 font-semibold mb-2 w-full cursor-pointer">
+        <span>Fecha</span>
+        <input
+          id="date"
+          type="date"
+          formControlName="date"
+          class="border border-gray-300 rounded-lg py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"/>
+      </label>
+      @if (menuForm.get('date')?.touched && menuForm.get('date')?.invalid ) {
+        <div class="text-red-500 text-sm mt-1">
+        La fecha debe ser posterior al día de hoy.
+      </div>
+    }
+    </div>
+
+    <div class="mb-4">
+      <label for="starter" class="block text-gray-700 font-semibold mb-2">Entrada</label>
+      <input
+        id="starter"
+        type="text"
+        formControlName="starter"
+        class="border border-gray-300 rounded-lg py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <div *ngIf="menuForm.get('starter')?.touched && menuForm.get('starter')?.invalid" class="text-red-500 text-sm mt-1">
+        La entrada es obligatoria.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="main_course" class="block text-gray-700 font-semibold mb-2">Plato Principal</label>
+      <input
+        id="main_course"
+        type="text"
+        formControlName="main_course"
+        class="border border-gray-300 rounded-lg py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      @if (menuForm.get('main_course')?.touched && menuForm.get('main_course')?.invalid){
+        <div class="text-red-500 text-sm mt-1">
+          El plato principal es obligatorio.
+        </div>
+      }      
+    </div>
+
+    <div class="mb-4">
+      <label for="dessert" class="block text-gray-700 font-semibold mb-2">Postre</label>
+      <input
+        id="dessert"
+        type="text"
+        formControlName="dessert"
+        class="border border-gray-300 rounded-lg py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      @if (menuForm.get('dessert')?.touched && menuForm.get('dessert')?.invalid){
+        <div class="text-red-500 text-sm mt-1">
+          El postre es obligatorio.
+        </div>
+      }
+      
+    </div>
+
+    <button
+    type="submit"
+    class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+    [disabled]="menuForm.invalid">
+    Crear Menú
+  </button>
+  </form>
+</div>

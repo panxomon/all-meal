@@ -1,0 +1,57 @@
+<div class="container mx-auto p-6">
+  <p class="text-lg font-semibold text-gray-700">Admin Panel</p>
+  <h2 class="text-2xl font-bold mb-4">Gestión de Menús</h2>
+
+  <div class="mb-6">
+    <button
+      routerLink="/admin/create"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+    >
+      Crear Nuevo Menú
+    </button>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="py-2 px-4 text-left text-gray-600 font-semibold">ID</th>
+          <th class="py-2 px-4 text-left text-gray-600 font-semibold">Entrada</th>
+          <th class="py-2 px-4 text-left text-gray-600 font-semibold">Plato Principal</th>
+          <th class="py-2 px-4 text-left text-gray-600 font-semibold">Postre</th>
+          <th class="py-2 px-4 text-left text-gray-600 font-semibold">Fecha</th>
+          <th class="py-2 px-4 text-left text-gray-600 font-semibold">Acciones</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr *ngFor="let menu of menus" class="hover:bg-gray-100">
+          <td class="py-2 px-4 border-b border-gray-300">{{ menu.id }}</td>
+          <td class="py-2 px-4 border-b border-gray-300" (dblclick)="editMenuField(menu, 'starter')">
+            <span *ngIf="!isEditing(menu.id, 'starter'); else editStarterTemplate">{{ menu.starter }}</span>
+            <ng-template #editStarterTemplate>
+              <input type="text" [(ngModel)]="editedValue" (keyup.enter)="updateMenu(menu.id, 'starter', editedValue || '')" (blur)="stopEditing()" />
+            </ng-template>
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300" (dblclick)="editMenuField(menu, 'main_course')">
+            <span *ngIf="!isEditing(menu.id, 'main_course'); else editMainCourseTemplate">{{ menu.main_course }}</span>
+            <ng-template #editMainCourseTemplate>
+              <input type="text" [(ngModel)]="editedValue" (keyup.enter)="updateMenu(menu.id, 'main_course', editedValue || '')" (blur)="stopEditing()" />
+            </ng-template>
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300" (dblclick)="editMenuField(menu, 'dessert')">
+            <span *ngIf="!isEditing(menu.id, 'dessert'); else editDessertTemplate">{{ menu.dessert }}</span>
+            <ng-template #editDessertTemplate>
+              <input type="text" [(ngModel)]="editedValue" (keyup.enter)="updateMenu(menu.id, 'dessert', editedValue || '')" (blur)="stopEditing()" />
+            </ng-template>
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300">{{ menu.date }}</td> <!-- Aquí la fecha no es editable -->
+          <td class="py-2 px-4 border-b border-gray-300">
+            <button (click)="removeMenu(menu.id)" class="text-red-500 hover:text-red-700" title="Eliminar">❌</button>
+          </td>
+        </tr>
+      </tbody>
+      
+    </table>
+  </div>
+</div>
