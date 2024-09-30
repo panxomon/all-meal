@@ -1,0 +1,9 @@
+{
+    "python.autoComplete.extraPaths": [
+      "./order_management",
+      "./order_management/menu/domain/models"
+    ],
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.typeCheckingMode": "off"
+  }
+  

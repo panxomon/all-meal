@@ -1,0 +1,249 @@
+openapi: 3.0.3
+info:
+  title: AllMeal API
+  description: API para la administración de menús y gestión de pedidos vía Slack
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api
+    description: Servidor local de desarrollo
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Menu:
+      type: object
+      required:
+        - date
+        - starter
+        - main_course
+        - dessert
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        date:
+          type: string
+          format: date
+          example: "2024-09-26"
+        starter:
+          type: string
+          example: "Ensalada César"
+        main_course:
+          type: string
+          example: "Filete a la parrilla"
+        dessert:
+          type: string
+          example: "Tarta de frutas"
+    Order:
+      type: object
+      required:
+        - menu_id
+        - user
+        - selected_option
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174001"
+        menu_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        user:
+          type: string
+          example: "john.doe@empresa.com"
+        selected_option:
+          type: string
+          enum: [starter, main_course, dessert]
+          example: "main_course"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-09-26T11:45:00Z"
+    SlackResponse:
+      type: object
+      properties:
+        user:
+          type: string
+          example: "john.doe@empresa.com"
+        response:
+          type: string
+          example: "main_course"
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Operación realizada con éxito"
+
+security:
+  - BearerAuth: []
+
+paths:
+  /menus:
+    post:
+      summary: Crear un nuevo menú
+      operationId: createMenu
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Datos del menú para una fecha específica
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Menu'
+      responses:
+        201:
+          description: Menú creado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Menu'
+        400:
+          description: Error en la solicitud
+    get:
+      summary: Obtener la lista de menús
+      operationId: listMenus
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Lista de menús
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Menu'
+        401:
+          description: No autorizado
+
+  /menus/{menu_id}:
+    get:
+      summary: Obtener un menú por ID
+      operationId: getMenu
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: menu_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Menú obtenido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Menu'
+        404:
+          description: Menú no encontrado
+    put:
+      summary: Actualizar un menú por ID
+      operationId: updateMenu
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: menu_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Datos actualizados del menú
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Menu'
+      responses:
+        200:
+          description: Menú actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Menu'
+        404:
+          description: Menú no encontrado
+    delete:
+      summary: Eliminar un menú por ID
+      operationId: deleteMenu
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: menu_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Menú eliminado con éxito
+        404:
+          description: Menú no encontrado
+
+  /orders:
+    post:
+      summary: Realizar un pedido
+      operationId: createOrder
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Información del pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        201:
+          description: Pedido registrado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        400:
+          description: Error en el pedido
+
+  /slack/responses:
+    post:
+      summary: Recibir respuesta desde Slack
+      operationId: receiveSlackResponse
+      requestBody:
+        description: Respuesta enviada por el empleado desde Slack
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlackResponse'
+      responses:
+        200:
+          description: Respuesta registrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+  /notifications/reminders:
+    post:
+      summary: Enviar recordatorio de pedido a empleados
+      operationId: sendReminder
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Recordatorio programado
+        required: true
+      responses:
+        200:
+          description: Recordatorio enviado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
