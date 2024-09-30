@@ -69,7 +69,7 @@ Antes de ejecutar la aplicación, debes configurar el archivo de entorno. Para h
 4. Accede a:
     ``` 
     Backend: http://localhost:8000
-    Frontend: http://localhost:4200
+    Frontend: http://localhost:4200/admin
     ```
 5. Para detener los servicios:
     ```
