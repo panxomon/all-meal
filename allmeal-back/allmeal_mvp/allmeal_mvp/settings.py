@@ -18,7 +18,7 @@ import os
 load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG') == 'True'  # Convierte a booleano
+DEBUG = os.getenv('DEBUG') == 'True'  
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 
@@ -37,7 +37,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+# Configuración de CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Tu nueva aplicación
+    'corsheaders',    
     'order_management',
-    'rest_framework',  # Si estás usando Django REST Framework
+    'rest_framework', 
 ]
 
 MIDDLEWARE = [
@@ -60,7 +63,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'allmeal_mvp.urls'
 

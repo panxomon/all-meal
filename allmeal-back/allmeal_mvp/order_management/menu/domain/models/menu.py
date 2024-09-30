@@ -14,8 +14,8 @@ class Menu(models.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "fecha": self.date,
-            "entrada": self.starter,
-            "principal": self.main_course,
-            "postre": self.dessert
+            "date": self.date,
+            "starter": self.starter,
+            "main_course": self.main_course,
+            "dessert": self.dessert
         }

@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    image: postgres:13
+    container_name: allmeal_db
+    environment:
+      POSTGRES_DB: allmeal_db
+      POSTGRES_USER: allmeal_user
+      POSTGRES_PASSWORD: allmeal_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - allmeal_network
+
+  web:
+    build:
+      context: ./allmeal-back
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./allmeal-back:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - allmeal_network
+
+  frontend:
+    build:
+      context: ./allmeal-front
+    command: ng serve --host 0.0.0.0
+    volumes:
+      - ./allmeal-front:/app
+    ports:
+      - "4200:4200"
+    networks:
+      - allmeal_network
+
+volumes:
+  db_data:
+
+networks:
+  allmeal_network:
