@@ -46,7 +46,7 @@ npm install -g @angular/cli@18
 
 1. Clona el repositorio:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/panxomon/all-meal/tree/main
    cd allmeal
 
 2. Asegúrate de tener Docker y Docker Compose instalados.
