@@ -15,8 +15,7 @@ class MenuRemoveService:
         :param menu_id: El ID del menú a eliminar.
         :return: Un mensaje de éxito o None si ocurre un error.
         """
-        try:
-            # Intentar eliminar el menú con el ID proporcionado
+        try:          
             menu, error = self.menu_repository.remove(menu_id)
             
             if error:
@@ -24,5 +23,4 @@ class MenuRemoveService:
             
             return f"Menu {menu_id} eliminado exitosamente", None
         except Exception as e:
-            # Manejar cualquier error que ocurra
             return None, f"Error al eliminar el menú: {e}"

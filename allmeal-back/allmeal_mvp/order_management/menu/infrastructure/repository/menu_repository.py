@@ -6,7 +6,7 @@ class MenuRepository:
     
     def save(self, menu: Menu) -> tuple: 
         try:           
-            MenuPersistence.save(menu)  # Llama al método estático directamente
+            MenuPersistence.save(menu)  
             return menu, None 
         except Exception as e:
             return None, f"Error al guardar el menú: {e}" 
@@ -30,7 +30,7 @@ class MenuRepository:
         Obtiene todos los menús desde la base de datos.
         """
         try:
-            menus = MenuPersistence.get_all()  # Llama al método estático directamente
+            menus = MenuPersistence.get_all() 
             return menus, None
         except Exception as e:
             return None, f"Error al obtener los menús: {e}"
@@ -44,7 +44,7 @@ class MenuRepository:
         try:
             menu = Menu.objects.get(id=menu_id)
             menu.delete()
-            return menu, None  # Retorna el menú eliminado y None como error
+            return menu, None  
         except Menu.DoesNotExist:
             return None, f"Menu con ID {menu_id} no existe"
         except Exception as e:

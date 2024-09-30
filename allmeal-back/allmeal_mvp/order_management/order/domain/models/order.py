@@ -1,8 +1,8 @@
 from django.db import models
-from menu.domain.models.menu import Menu  # Asegúrate de importar correctamente el modelo Menu
+from menu.domain.models.menu import Menu
 
 class Order(models.Model):
-    employee_id = models.CharField(max_length=100)  # Slack ID, nickname, etc.
+    employee_id = models.CharField(max_length=100) 
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
 
     def __str__(self):

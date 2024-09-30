@@ -23,10 +23,10 @@ from order_management.menu.infrastructure.http.controller import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),    
-    path('', RedirectView.as_view(url='/menus/', permanent=True)),  # Redirige la raíz a /menus/
-    path('menus/', get_all_menus, name='get_all_menus'),  # GET: listar menús
-    path('menus/create/', create_menu, name='create_menu'),  # POST: crear menú
-    path('menus/<uuid:menu_id>/update/', update_menu, name='update_menu'),  # PUT: actualizar menú
-    path('menus/<uuid:menu_id>/delete/', remove_menu, name='remove_menu'),  # DELETE: eliminar menú
+    path('', RedirectView.as_view(url='/menus/', permanent=True)), 
+    path('menus/', get_all_menus, name='get_all_menus'), 
+    path('menus/create/', create_menu, name='create_menu'), 
+    path('menus/<uuid:menu_id>/update/', update_menu, name='update_menu'),
+    path('menus/<uuid:menu_id>/delete/', remove_menu, name='remove_menu'), 
 ]
 

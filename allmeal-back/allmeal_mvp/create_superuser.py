@@ -2,15 +2,14 @@ import os
 import django
 from django.contrib.auth.models import User
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'allmeal_mvp.settings')  # Reemplaza 'allmeal_mvp' con el nombre de tu proyecto
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'allmeal_mvp.settings') 
 django.setup()
 
-# Verificar si el superusuario ya existe
-if not User.objects.filter(username='admin').exists():  # Cambia 'admin' por el nombre de usuario que desees
+if not User.objects.filter(username='admin').exists():  
     User.objects.create_superuser(
-        username='admin',  # Cambia 'admin' por tu nombre de usuario
-        email='admin@example.com',  # Cambia el correo si es necesario
-        password='admin123'  # Cambia 'admin123' por tu contraseña
+        username='admin',
+        email='admin@example.com',  
+        password='admin123'  
     )
     print("Superusuario creado.")
 else:
