@@ -44,7 +44,6 @@ Thumbs.db
 node_modules/
 dist/
 .tmp/
-package-lock.json
 yarn.lock
 .angular/
 src/environments/environment*.ts
