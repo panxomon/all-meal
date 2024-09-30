@@ -16,10 +16,12 @@ services:
 
   web:
     build:
-      context: ./allmeal-back
-    command: python manage.py runserver 0.0.0.0:8000
+      context: ./allmeal-back/allmeal_mvp
+      dockerfile: Dockerfile 
+    command: >
+        sh -c "python manage.py migrate & python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./allmeal-back:/code
+      - ./allmeal-back/allmeal_mvp:/code
     ports:
       - "8000:8000"
     depends_on:
@@ -30,9 +32,8 @@ services:
   frontend:
     build:
       context: ./allmeal-front
+      dockerfile: Dockerfile  # Asegúrate de que el Dockerfile se llame así
     command: ng serve --host 0.0.0.0
-    volumes:
-      - ./allmeal-front:/app
     ports:
       - "4200:4200"
     networks:
