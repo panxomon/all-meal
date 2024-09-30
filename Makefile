@@ -5,3 +5,7 @@ up:
 
 down:
 	docker-compose down
+
+env:
+	cp ./allmeal-back/allmeal_mvp/.env.example ./allmeal-back/allmeal_mvp/.env
+

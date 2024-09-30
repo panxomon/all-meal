@@ -51,7 +51,16 @@ npm install -g @angular/cli@18
 
 2. Asegúrate de tener Docker y Docker Compose instalados.
 
-3. Levanta los servicios:
+## Configuración del Entorno
+
+Antes de ejecutar la aplicación, debes configurar el archivo de entorno. Para hacerlo, sigue estos pasos:
+
+1. crea un archivo de environment:
+
+   ```bash
+   make env
+
+2. Levanta los servicios:
 
     ```bash    
     make up
